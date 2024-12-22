@@ -1,0 +1,28 @@
+
+services:
+  mysql_db:
+    image: mysql:8.0.3
+    hostname: mysql_db
+    container_name: mysql_db
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: userinterface
+      MYSQL_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+    
+  springboot:
+    image: sumitdhakar/userauth:latest
+    links:
+      - mysql_db
+    depends_on:
+      - mysql_db       
+    container_name: wd-container
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql_db:3306/userinterface?useSSL=false&characterEncoding=utf8&allowPublicKeyRetrieval=true
+      SPRING_DATASOURCE_USERNAME: root
+      SPRING_DATASOURCE_PASSWORD: root
+    ports:
+      - "8081:8081"
