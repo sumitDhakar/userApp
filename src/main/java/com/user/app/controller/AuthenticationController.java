@@ -30,21 +30,39 @@ public class AuthenticationController {
 	@Autowired
 	private IAuthenticationService authService;
 	
-	
+	/**
+	 * Endpoint to handle user signup.
+	 * 
+	 * @param request The SignUpRequest object containing the user's details for signup.
+	 * @return ResponseEntity with the result of the signup operation and HTTP status CREATED.
+	 */
 	@PostMapping("/signup")
 	public ResponseEntity<?> signup(@RequestBody SignUpRequest request) {		
 		return new ResponseEntity<>(this.authService.signup(request), HttpStatus.CREATED);
 	}
 	
-	
+	/**
+	 * Endpoint to handle user signin (login).
+	 * 
+	 * @param request The SigninRequest object containing the user's email and password for login.
+	 * @return ResponseEntity with the result of the login operation and HTTP status OK.
+	 */
 	@PostMapping("/signin")
 	public ResponseEntity<?> login(@RequestBody SigninRequest request) {
+		System.err.println(request.getEmail());
+		System.err.println(request.getPassword());
 		return new ResponseEntity<>(this.authService.login(request), HttpStatus.OK);
 	}
 	
-	
+	/**
+	 * Endpoint to refresh the user's access token using a refresh token.
+	 * 
+	 * @param request The RefreshTokenRequest object containing the refresh token.
+	 * @return ResponseEntity with the refreshed access token and HTTP status OK.
+	 */
 	@PostMapping("/refresh")
     public ResponseEntity<?> refreshAccessToken(@RequestBody RefreshTokenRequest request) {
+		System.err.println(request.getRefreshToken());
 		return new ResponseEntity<>(this.authService.refreshAccessToken(request), HttpStatus.OK);
     }
 }

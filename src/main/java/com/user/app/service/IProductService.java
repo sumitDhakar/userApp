@@ -10,5 +10,7 @@ public interface IProductService {
 	public List<Product> listProducts();
 
 	public Product createProduct(ProductRequest request);
+	
+	 public void buyProduct(Long productId, String username);
 
 }
